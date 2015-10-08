@@ -31697,6 +31697,129 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":28}],160:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var BlogPostModel = require('../models/BlogPostModel.js');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			{ className: 'addPostPageContainer' },
+			React.createElement(
+				'form',
+				{ className: 'form', onSubmit: this.onPost },
+				React.createElement('input', { type: 'text', className: 'textInput', ref: 'title', placeholder: 'Title' }),
+				React.createElement('input', { type: 'text', className: 'textInput', ref: 'author', placeholder: 'Author (that\'s you)' }),
+				React.createElement('textArea', { type: 'text', className: 'textArea', ref: 'newPost', placeholder: 'Get to bloggin' }),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'submitPostBtn' },
+					'Submit'
+				)
+			)
+		);
+	},
+	onPost: function onPost(e) {
+		e.preventDefault();
+
+		var newBlogPost = new BlogPostModel({
+			title: this.refs.title.getDOMNode().value,
+			author: this.refs.author.getDOMNode().value,
+			newPost: this.refs.newPost.getDOMNode().value
+		});
+
+		newBlogPost.save();
+	}
+});
+
+},{"../models/BlogPostModel.js":166,"react":159}],161:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+module.exports = React.createClass({
+	displayName: "exports",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "footerContainer" },
+			React.createElement(
+				"a",
+				{ href: "https://icons8.com" },
+				"Icon pack by Icons8"
+			)
+		);
+	}
+});
+
+},{"react":159}],162:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var BlogPostModel = require('../models/BlogPostModel.js');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	getInitialState: function getInitialState() {
+		return {
+			posts: []
+		};
+	},
+	componentWillMount: function componentWillMount() {
+		var _this = this;
+
+		var query = new Parse.Query(BlogPostModel);
+		query.find().then(function (posts) {
+			_this.setState({ posts: posts });
+		}, function (err) {
+			console.log(err);
+		});
+	},
+	render: function render() {
+		var postElement = this.state.posts.map(function (post) {
+			return React.createElement(
+				'div',
+				{ key: post.id },
+				React.createElement(
+					'div',
+					null,
+					post.get('title')
+				),
+				React.createElement(
+					'div',
+					null,
+					post.get('author')
+				),
+				React.createElement(
+					'div',
+					null,
+					post.get('newPost')
+				)
+			);
+		});
+		return React.createElement(
+			'div',
+			{ className: 'homePageContainer' },
+			React.createElement(
+				'div',
+				{ className: 'test' },
+				postElement
+			)
+		);
+	}
+});
+
+},{"../models/BlogPostModel.js":166,"react":159}],163:[function(require,module,exports){
+"use strict";
+
+},{}],164:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -31707,11 +31830,41 @@ module.exports = React.createClass({
 	displayName: "exports",
 
 	render: function render() {
-		return React.createElement("div", { className: "navContainer" });
+		return React.createElement(
+			"div",
+			{ className: "navContainer" },
+			React.createElement(
+				"a",
+				{ href: "#Home" },
+				React.createElement(
+					"div",
+					{ className: "webName" },
+					"BC"
+				)
+			),
+			React.createElement(
+				"a",
+				{ href: "#AddPost" },
+				React.createElement(
+					"div",
+					{ className: "addPostLink" },
+					"Add A Post"
+				)
+			),
+			React.createElement(
+				"a",
+				{ href: "#Login" },
+				React.createElement(
+					"div",
+					{ className: "login" },
+					"LogIn"
+				)
+			)
+		);
 	}
 });
 
-},{"react":159}],161:[function(require,module,exports){
+},{"react":159}],165:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -31722,18 +31875,46 @@ window.$ = $;
 window.jQuery = $;
 
 Parse.initialize('rtFqJShVSwzz4iKOoXHCdFmbhKNbq3IABeW6fJdB', 'nioCucgyW1qr5BDvxcycrcu5A7GoMWAaUZaGCpVA');
-
+//**********Components**********
 var NavComponent = require('./components/NavComponent.js');
-
+var FooterComponent = require('./components/FooterComponent.js');
+var MainComponent = require('./components/MainComponent.js');
+var AddPostPageComponent = require('./components/AddPostPageComponent.js');
+var HomePageComponent = require('./components/HomePageComponent.js');
+//**********HTML ID's**********
 var Nav = document.getElementById('nav');
+var Footer = document.getElementById('footer');
+var Main = document.getElementById('main');
 
-React.render(React.createElement(
-	'div',
-	null,
-	React.createElement(NavComponent, null)
-), Nav);
+var Router = Backbone.Router.extend({
 
-},{"./components/NavComponent.js":160,"backbone":1,"backbone/node_modules/underscore":2,"jquery":4,"react":159}]},{},[161])
+	routes: {
+		'': 'home',
+		'AddPost': 'addPost'
+	},
+	home: function home() {
+		React.render(React.createElement(HomePageComponent, null), main);
+	},
+	addPost: function addPost() {
+		React.render(React.createElement(AddPostPageComponent, null), Main);
+	}
+});
+
+var r = new Router();
+Backbone.history.start();
+
+React.render(React.createElement(NavComponent, { router: r }), Nav);
+
+React.render(React.createElement(FooterComponent, { router: r }), Footer);
+
+},{"./components/AddPostPageComponent.js":160,"./components/FooterComponent.js":161,"./components/HomePageComponent.js":162,"./components/MainComponent.js":163,"./components/NavComponent.js":164,"backbone":1,"backbone/node_modules/underscore":2,"jquery":4,"react":159}],166:[function(require,module,exports){
+'use strict';
+
+module.exports = Parse.Object.extend({
+	className: 'BlogPost'
+});
+
+},{}]},{},[165])
 
 
 //# sourceMappingURL=bundle.js.map
