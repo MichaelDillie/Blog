@@ -14,6 +14,8 @@ var FooterComponent = require('./components/FooterComponent.js');
 var MainComponent = require('./components/MainComponent.js');
 var AddPostPageComponent = require('./components/AddPostPageComponent.js');
 var HomePageComponent = require('./components/HomePageComponent.js');
+var LoginPageComponent = require('./components/LoginPageComponent.js');
+var SignupPageComponent = require('./components/SignupPageComponent.js');
 //**********HTML ID's**********
 var Nav = document.getElementById('nav');
 var Footer = document.getElementById('footer');
@@ -23,18 +25,33 @@ var Main = document.getElementById('main');
 var Router = Backbone.Router.extend({
 
 	routes: {
-		'':'home',
-		'AddPost': 'addPost'
+		'': 'home',
+		'Home':'home',
+		'AddPost': 'addPost',
+		'Login': 'onLogin',
+		'Signup': 'onSignup'
 	},
 	home: function() {
 		React.render (
-			<HomePageComponent />,
-			main
+			<HomePageComponent router={r}/>,
+			Main
 		);
 	},
 	addPost: function() {
 		React.render (
-			<AddPostPageComponent />,
+			<AddPostPageComponent router={r}/>,
+			Main
+		);
+	},
+	onLogin: function() {
+		React.render (
+			<LoginPageComponent router={r}/>,
+			Main
+		);
+	},
+	onSignup: function() {
+		React.render (
+			<SignupPageComponent router={r}/>,
 			Main
 		);
 	}

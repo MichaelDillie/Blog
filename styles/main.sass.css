@@ -1,6 +1,6 @@
 body {
   margin: 0em;
-  background-color: black; }
+  background-color: #101010; }
 
 a {
   text-decoration: none; }
@@ -31,26 +31,26 @@ a {
     font-family: 'Titillium Web', sans-serif;
     font-weight: 400; }
 
-#main .addPostPageContainer {
+.addPostPageContainer {
   text-align: center; }
-  #main .addPostPageContainer .textInput {
+  .addPostPageContainer .textInput {
     margin: 0 auto;
     margin-top: 1em;
     border: none;
-    background-color: black;
+    background-color: #101010;
     border-bottom: .1em solid #F1F1F1;
     font-size: 1.5em;
     outline: none;
     color: #F1F1F1;
     font-family: 'Titillium Web', sans-serif;
     display: block; }
-  #main .addPostPageContainer .textArea {
+  .addPostPageContainer .textArea {
     margin: 0 auto;
     margin-top: 1em;
     width: 18em;
     height: 13em;
     border: none;
-    background-color: black;
+    background-color: #101010;
     border-bottom: .1em solid #F1F1F1;
     font-size: 1.5em;
     outline: none;
@@ -58,7 +58,7 @@ a {
     font-family: 'Titillium Web', sans-serif;
     display: block;
     resize: none; }
-  #main .addPostPageContainer .submitPostBtn {
+  .addPostPageContainer .submitPostBtn {
     margin-top: 1em;
     border: 0px solid;
     background-color: #F1F1F1;
@@ -68,5 +68,103 @@ a {
     outline: none;
     cursor: pointer; }
 
-.test {
-  color: red; }
+.homePageContainer .test {
+  color: #F1F1F1;
+  width: 29em;
+  margin: 0 auto;
+  margin-top: 2em; }
+  .homePageContainer .test .singalPost {
+    border: 1px solid #F1F1F1;
+    padding: .5em;
+    margin-top: 2em; }
+  .homePageContainer .test .title {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.4em; }
+  .homePageContainer .test .author {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 300;
+    font-size: .7em;
+    border-bottom: 1px solid #F1F1F1;
+    border-top: 1px solid #F1F1F1;
+    width: 3.4em; }
+  .homePageContainer .test .newPost {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 400;
+    margin-top: .8em;
+    line-height: 1.3em;
+    color: #CFCFCF; }
+  .homePageContainer .test .readMoreLink {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 200;
+    margin-top: .5em;
+    color: #D3F0F1;
+    text-decoration: underline; }
+
+.loginContainer {
+  margin-top: 8em; }
+  .loginContainer .textInput {
+    margin: 0 auto;
+    margin-top: 1em;
+    border: none;
+    background-color: #101010;
+    border-bottom: .1em solid #F1F1F1;
+    font-size: 1.5em;
+    outline: none;
+    color: #F1F1F1;
+    font-family: 'Titillium Web', sans-serif;
+    display: block; }
+  .loginContainer .loginBtn {
+    margin: 0 auto;
+    margin-top: 1em;
+    border: 0px solid;
+    background-color: #F1F1F1;
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: x-large;
+    outline: none;
+    cursor: pointer;
+    display: block; }
+  .loginContainer .signUp {
+    margin-top: 2em;
+    text-align: center;
+    color: #F1F1F1;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 200; }
+  .loginContainer .signupBtn {
+    margin: 0 auto;
+    margin-top: .5em;
+    border: 0px solid;
+    background-color: #F1F1F1;
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: large;
+    outline: none;
+    cursor: pointer;
+    display: block; }
+
+.signupContainer {
+  margin-top: 6em; }
+  .signupContainer .textInput {
+    margin: 0 auto;
+    margin-top: 1em;
+    border: none;
+    background-color: #101010;
+    border-bottom: .1em solid #F1F1F1;
+    font-size: 1.5em;
+    outline: none;
+    color: #F1F1F1;
+    font-family: 'Titillium Web', sans-serif;
+    display: block; }
+  .signupContainer .signupBtn {
+    margin: 0 auto;
+    margin-top: 1em;
+    border: 0px solid;
+    background-color: #F1F1F1;
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: x-large;
+    outline: none;
+    cursor: pointer;
+    display: block; }

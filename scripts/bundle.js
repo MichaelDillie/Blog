@@ -31737,7 +31737,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../models/BlogPostModel.js":166,"react":159}],161:[function(require,module,exports){
+},{"../models/BlogPostModel.js":168,"react":159}],161:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -31786,21 +31786,34 @@ module.exports = React.createClass({
 		var postElement = this.state.posts.map(function (post) {
 			return React.createElement(
 				'div',
-				{ key: post.id },
+				{ className: 'singalPost' },
 				React.createElement(
 					'div',
-					null,
-					post.get('title')
+					{ key: post.id },
+					React.createElement(
+						'div',
+						{ className: 'title' },
+						post.get('title')
+					),
+					React.createElement(
+						'div',
+						{ className: 'author' },
+						post.get('author')
+					),
+					React.createElement(
+						'div',
+						{ className: 'newPost' },
+						post.get('newPost')
+					)
 				),
 				React.createElement(
-					'div',
-					null,
-					post.get('author')
-				),
-				React.createElement(
-					'div',
-					null,
-					post.get('newPost')
+					'a',
+					{ href: '#ReadMore' },
+					React.createElement(
+						'div',
+						{ className: 'readMoreLink' },
+						'Read More'
+					)
 				)
 			);
 		});
@@ -31816,10 +31829,47 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../models/BlogPostModel.js":166,"react":159}],163:[function(require,module,exports){
+},{"../models/BlogPostModel.js":168,"react":159}],163:[function(require,module,exports){
 "use strict";
 
-},{}],164:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+	displayName: "exports",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "loginContainer" },
+			React.createElement("input", { type: "text", className: "textInput", placeholder: "Email" }),
+			React.createElement("input", { type: "password", className: "textInput", placeholder: "Password" }),
+			React.createElement(
+				"button",
+				{ className: "loginBtn" },
+				"LogIn"
+			),
+			React.createElement(
+				"div",
+				{ className: "signUp" },
+				"Not a user? Sign up now, its free"
+			),
+			React.createElement(
+				"a",
+				{ href: "#Signup" },
+				React.createElement(
+					"button",
+					{ className: "signupBtn" },
+					"SignUp"
+				)
+			)
+		);
+	}
+});
+
+},{"react":159}],164:[function(require,module,exports){
+"use strict";
+
+},{}],165:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -31864,7 +31914,68 @@ module.exports = React.createClass({
 	}
 });
 
-},{"react":159}],165:[function(require,module,exports){
+},{"react":159}],166:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var Backbone = require('backbone');
+
+var UserModel = require('../models/UserModel.js');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			{ className: 'signupContainer' },
+			React.createElement(
+				'form',
+				{ onSubmit: this.onSignup },
+				React.createElement('input', { type: 'text', className: 'textInput', ref: 'email', placeholder: 'Email' }),
+				React.createElement('input', { type: 'password', className: 'textInput', ref: 'password', placeholder: 'Password' }),
+				React.createElement('input', { type: 'password', className: 'textInput', placeholder: 'Retype Password' }),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'signupBtn' },
+					'SignUp'
+				)
+			)
+		);
+	},
+	onSignup: function onSignup(e) {
+		var _this = this;
+
+		e.preventDefault();
+
+		var user = new Parse.User();
+		user.signUp({
+			username: this.refs.email.value,
+			password: this.refs.password.value
+		}, {
+			success: function success(user) {
+				_this.props.router.navigate('AddPost', { trigger: true });
+			},
+			error: (function (_error) {
+				function error(_x, _x2) {
+					return _error.apply(this, arguments);
+				}
+
+				error.toString = function () {
+					return _error.toString();
+				};
+
+				return error;
+			})(function (user, err) {
+				_this.setState({
+					error: error.message
+				});
+			})
+		});
+	}
+});
+
+},{"../models/UserModel.js":169,"backbone":1,"react":159}],167:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -31881,6 +31992,8 @@ var FooterComponent = require('./components/FooterComponent.js');
 var MainComponent = require('./components/MainComponent.js');
 var AddPostPageComponent = require('./components/AddPostPageComponent.js');
 var HomePageComponent = require('./components/HomePageComponent.js');
+var LoginPageComponent = require('./components/LoginPageComponent.js');
+var SignupPageComponent = require('./components/SignupPageComponent.js');
 //**********HTML ID's**********
 var Nav = document.getElementById('nav');
 var Footer = document.getElementById('footer');
@@ -31890,13 +32003,22 @@ var Router = Backbone.Router.extend({
 
 	routes: {
 		'': 'home',
-		'AddPost': 'addPost'
+		'Home': 'home',
+		'AddPost': 'addPost',
+		'Login': 'onLogin',
+		'Signup': 'onSignup'
 	},
 	home: function home() {
-		React.render(React.createElement(HomePageComponent, null), main);
+		React.render(React.createElement(HomePageComponent, { router: r }), Main);
 	},
 	addPost: function addPost() {
-		React.render(React.createElement(AddPostPageComponent, null), Main);
+		React.render(React.createElement(AddPostPageComponent, { router: r }), Main);
+	},
+	onLogin: function onLogin() {
+		React.render(React.createElement(LoginPageComponent, { router: r }), Main);
+	},
+	onSignup: function onSignup() {
+		React.render(React.createElement(SignupPageComponent, { router: r }), Main);
 	}
 });
 
@@ -31907,14 +32029,21 @@ React.render(React.createElement(NavComponent, { router: r }), Nav);
 
 React.render(React.createElement(FooterComponent, { router: r }), Footer);
 
-},{"./components/AddPostPageComponent.js":160,"./components/FooterComponent.js":161,"./components/HomePageComponent.js":162,"./components/MainComponent.js":163,"./components/NavComponent.js":164,"backbone":1,"backbone/node_modules/underscore":2,"jquery":4,"react":159}],166:[function(require,module,exports){
+},{"./components/AddPostPageComponent.js":160,"./components/FooterComponent.js":161,"./components/HomePageComponent.js":162,"./components/LoginPageComponent.js":163,"./components/MainComponent.js":164,"./components/NavComponent.js":165,"./components/SignupPageComponent.js":166,"backbone":1,"backbone/node_modules/underscore":2,"jquery":4,"react":159}],168:[function(require,module,exports){
 'use strict';
 
 module.exports = Parse.Object.extend({
 	className: 'BlogPost'
 });
 
-},{}]},{},[165])
+},{}],169:[function(require,module,exports){
+'use strict';
+
+module.exports = Parse.Object.extend({
+	className: 'User'
+});
+
+},{}]},{},[167])
 
 
 //# sourceMappingURL=bundle.js.map
